@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-//        TokenInfoResponse tokenInfo = ConnectionAuth.generateAuthKey(pongiftUserId, pongiftClientId, pongiftClientSecret);
+        // TODO : Token 발급
 
         UserResponse userResponse = UserResponse.builder()
                 .id(user.getId())
@@ -49,11 +49,4 @@ public class UserServiceImpl implements UserService {
         return userResponse;
     }
 
-    @Override
-    public Page<UserResponse> getUserList() {
-        Page<User> users = (Page<User>) userRepository.findAll();
-
-        return null;
-
-    }
 }

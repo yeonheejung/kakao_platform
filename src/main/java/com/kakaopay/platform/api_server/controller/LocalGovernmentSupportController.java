@@ -110,7 +110,7 @@ public class LocalGovernmentSupportController {
     }
 
     @PostMapping("local-government-support/upload")
-    @ApiOperation(value = "지자체 협약 지원 정보 엑셀 업로드", notes = "지자체 협약 지원 정보 엑셀 업로드 API")
+    @ApiOperation(value = "지자체 협약 지원 정보 엑셀 업로드로 등록", notes = "지자체 협약 지원 정보 엑셀 업로드 API")
     public ResponseEntity<ResponseObject> readExcel(@RequestParam("file") MultipartFile multipartFile)
             throws IOException, InvalidFormatException {
         List<LocalGovernmentSupportRequest> localGovernmentSupportList = localGovernmentSupportService.uploadLocalGovernmentSupportFile(multipartFile);

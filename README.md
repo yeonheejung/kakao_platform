@@ -1,73 +1,70 @@
 # 프로젝트명
-> 간략한 프로젝트 소개 문구를 작성합니다.
+> 지자체 협약 지원 서비스 개발
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
 
-한 두 문단으로 프로젝트 소개 글을 작성합니다.
+중소기업은행 지자체 협약 지원 정보 서비스 개발
 
-![](../header.png)
+![](./swaggerScreenshot.png)
 
-## 설치 방법
+## 목차
+* [개발 프레임워크](#개발-프레임워크)
+* [실행 방법](#실행-방법)
+* [API 명세](#api-명세)
+* [TODO](#todo)
+* [해결 방법](#해결-방법)
 
-OS X & 리눅스:
 
+## 개발 프레임워크
+| Dependence  |    Version    | 
+|-------------|---------------|
+| java        | 1.8           |
+| spring-boot | 2.1.3.RELEASE |
+| jpa         |               |
+| h2 databaase|               |
+| lombok      |               |
+| maven       |               |
+
+## 실행 방법
 ```sh
-npm install my-crazy-module --save
+> Run ApiServerApplication
 ```
 
-윈도우:
-
+## API 명세
 ```sh
-edit autoexec.bat
+http://localhost:7070/swagger-ui.html 로 접속
 ```
 
-## 사용 예제
+## TODO
+- [x] DB 스키마 설계
+- [x] API Spec 정리
+- [x] H2 DB 연동 (in memory)
+- [x] API 구현
+    - [x] 각 레코드를 데이터베이스에 저장하는 API 개발
+    - [x] 지자체 목록 검색 API
+    - [x] 지원하는 지자체명을 입력 받아 해당 지자체의 지원정보를 출력하는 API 개발
+    - [x] 지원하는 지자체 정보 수정 기능 API 개발
+    - [x] 지원한도 컬럼에서 지원금액으로 내림차순 정렬(지원금액이 동일하면 이차보전 평균 비율이 적은 순서)하여 특정 개수만 출력하는 API 개발
+    - [x] 이차보전 컬럼에서 보전 비율이 가장 작은 추천 기관명을 출력하는 API 개발
+    - [ ] (옵션) 특정 기사를 분석하여 본 사용자는 어떤 지자체에서 금융지원을 받는게 가장 좋을지 지 자체명을 추천하는 API 개발
+- [x] 단위 테스트를 통한 검증
+- [x] README 작성
 
-스크린 샷과 코드 예제를 통해 사용 방법을 자세히 설명합니다.
+## 해결 방법
+- DB 스키마 설계
+    - 지자체 기관 한 개당 한 개의 지자체 지원정보를 가질 수 있다고 가정
+    - 지원금액이나 이차보전으로 정렬이 필요하므로 숫자형으로 저장(이차 보전은 min, max 분리)
+- 각 레코드를 데이터베이스에 저장하는 API 개발
+    - json data 입력받아 저장하는 API
+    - excel file 업로드시 저장하는 API
+- 이차보전 컬럼에서 보전 비율이 가장 작은 추천 기관명을 출력하는 API 개발
+    - 보전 비율이 min, max 값을 갖고 있으므로 평균 비율이 가장 작은 추천 기관명으로 출력
+    
+    
 
-_더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
 
-## 개발 환경 설정
 
-모든 개발 의존성 설치 방법과 자동 테스트 슈트 실행 방법을 운영체제 별로 작성합니다.
 
-```sh
-make install
-npm test
-```
 
-## 업데이트 내역
-
-* 0.2.1
-    * 수정: 문서 업데이트 (모듈 코드 동일)
-* 0.2.0
-    * 수정: `setDefaultXYZ()` 메서드 제거
-    * 추가: `init()` 메서드 추가
-* 0.1.1
-    * 버그 수정: `baz()` 메서드 호출 시 부팅되지 않는 현상 (@컨트리뷰터 감사합니다!)
-* 0.1.0
-    * 첫 출시
-    * 수정: `foo()` 메서드 네이밍을 `bar()`로 수정
-* 0.0.1
-    * 작업 진행 중
-
-## 정보
-
-이름 – [@트위터 주소](https://twitter.com/dbader_org) – 이메일주소@example.com
-
-XYZ 라이센스를 준수하며 ``LICENSE``에서 자세한 정보를 확인할 수 있습니다.
-
-[https://github.com/yourname/github-link](https://github.com/dbader/)
-
-## 기여 방법
-
-1. (<https://github.com/yourname/yourproject/fork>)을 포크합니다.
-2. (`git checkout -b feature/fooBar`) 명령어로 새 브랜치를 만드세요.
-3. (`git commit -am 'Add some fooBar'`) 명령어로 커밋하세요.
-4. (`git push origin feature/fooBar`) 명령어로 브랜치에 푸시하세요. 
-5. 풀리퀘스트를 보내주세요.
 
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square

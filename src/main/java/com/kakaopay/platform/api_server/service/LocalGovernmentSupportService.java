@@ -58,5 +58,13 @@ public interface LocalGovernmentSupportService {
      */
     String getInstituteOrderByRate();
 
+    /**
+     * 지자체 협약 지원 정보 엑셀 업로드
+     *
+     * @param multipartFile
+     * @return
+     * @throws IOException
+     * @throws InvalidFormatException
+     */
     List<LocalGovernmentSupportRequest> uploadLocalGovernmentSupportFile(MultipartFile multipartFile) throws IOException, InvalidFormatException;
 }
