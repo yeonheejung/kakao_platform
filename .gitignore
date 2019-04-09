@@ -1,0 +1,57 @@
+# Created by .ignore support plugin (hsz.mobi)
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### Log files ###
+*.log
+
+### Package Files ###
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Class Files ###
+target
+*.class
+
+### System Files ###
+.DS_Store
+
+
+### Etc Files ###
+.vscode/*
+*.csr
+*.srl
+*.req
+docs/_build
+docs/README.md
+local.make
+*cache*
+Untitled*
+mvnw
+mvnw.cmd
+.mvn
+package-lock.json
