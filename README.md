@@ -26,12 +26,14 @@
 
 ## 실행 방법
 ```sh
-> Run ApiServerApplication
+> mvn clean install
+> java -jar target/api_server-0.0.1-SNAPSHOT.jar
 ```
 
 ## API 명세
 ```sh
 http://localhost:7070/swagger-ui.html 로 접속
+
 ```
 
 ## TODO
