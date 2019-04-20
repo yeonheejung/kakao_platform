@@ -14,7 +14,7 @@ public interface LocalGovernmentSupportService {
     /**
      * 지자체 지원정보 목록 조회
      *
-     * @return
+     * @return List<LocalGovernmentSupportResponse>
      */
     List<LocalGovernmentSupportResponse> getLocalGovernmentSupportList();
 
@@ -22,7 +22,7 @@ public interface LocalGovernmentSupportService {
      * 지자체명으로 지원정보 조회
      *
      * @param region
-     * @return
+     * @return LocalGovernmentSupportResponse
      */
     LocalGovernmentSupportResponse getLocalGovernmentSupport(String region);
 
@@ -30,7 +30,7 @@ public interface LocalGovernmentSupportService {
      * 지자체 지원정보 등록
      *
      * @param localGovernmentSupportRequest
-     * @return
+     * @return LocalGovernmentSupportResponse
      */
     LocalGovernmentSupportResponse createLocalGovernmentSupport(LocalGovernmentSupportRequest localGovernmentSupportRequest);
 
@@ -39,7 +39,7 @@ public interface LocalGovernmentSupportService {
      *
      * @param id
      * @param localGovernmentSupportRequest
-     * @return
+     * @return LocalGovernmentSupportResponse
      */
     LocalGovernmentSupportResponse updateLocalGovernmentSupport(Long id, LocalGovernmentSupportRequest localGovernmentSupportRequest);
 
@@ -62,7 +62,7 @@ public interface LocalGovernmentSupportService {
      * 지자체 협약 지원 정보 엑셀 업로드
      *
      * @param multipartFile
-     * @return
+     * @return List<LocalGovernmentSupportRequest>
      * @throws IOException
      * @throws InvalidFormatException
      */

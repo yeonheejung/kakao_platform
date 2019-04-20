@@ -25,7 +25,6 @@ public class ExcelUtil {
         final Sheet sheet = workbook.getSheetAt(0);
         final int rowCount = sheet.getPhysicalNumberOfRows();
 
-        // TODO: null 일때 처
         return IntStream
                 .range(1, rowCount)
                 .mapToObj(rowIndex -> rowFunc.apply(sheet.getRow(rowIndex)))

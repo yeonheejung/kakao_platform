@@ -63,14 +63,13 @@ public class LocalGovernmentServiceImpl implements LocalGovernmentService {
 
 
     /**
-     * 지자체 코드("reg**") 변환
+     * 지자체 코드 변환
+     *
      * @param localGovernmentCode
-     * @return
+     * @return "reg**"
      */
     private String makeLocalGovernmentRegion(Long localGovernmentCode) {
 
-        String region = "reg"+localGovernmentCode;
-
-        return region;
+        return "reg" + localGovernmentCode;
     }
 }

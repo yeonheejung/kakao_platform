@@ -1,10 +1,13 @@
 package com.kakaopay.platform.api_server.service.impl;
 
+import com.kakaopay.platform.api_server.exception.FileUploadException;
 import com.kakaopay.platform.api_server.exception.LocalGovernmentSupportDuplicationException;
 import com.kakaopay.platform.api_server.exception.NotFoundLocalGovernmentSupportException;
 import com.kakaopay.platform.api_server.model.LocalGovernment;
 import com.kakaopay.platform.api_server.model.LocalGovernmentSupport;
+import com.kakaopay.platform.api_server.model.dto.request.LocalGovernmentRequest;
 import com.kakaopay.platform.api_server.model.dto.request.LocalGovernmentSupportRequest;
+import com.kakaopay.platform.api_server.model.dto.response.LocalGovernmentResponse;
 import com.kakaopay.platform.api_server.model.dto.response.LocalGovernmentSupportResponse;
 import com.kakaopay.platform.api_server.model.type.MoneyType;
 import com.kakaopay.platform.api_server.repository.LocalGovernmentRepository;
@@ -75,7 +78,7 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
         String rate = StringUtil.convertRateToString(localGovernmentSupport.getRateMin(), localGovernmentSupport.getRateMax());
         String limit = MoneyType.findMoneyStringType(localGovernmentSupport.getSupportLimit());
 
-        LocalGovernmentSupportResponse localGovernmentSupportResponse = LocalGovernmentSupportResponse.builder()
+        return LocalGovernmentSupportResponse.builder()
                 .id(localGovernmentSupport.getId())
                 .region(localGovernmentSupport.getLocalGovernment().getLocalGovernmentName())
                 .target(localGovernmentSupport.getTarget())
@@ -86,8 +89,6 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
                 .mgmt(localGovernmentSupport.getMgmt())
                 .reception(localGovernmentSupport.getReception())
                 .build();
-
-        return localGovernmentSupportResponse;
     }
 
     @Override
@@ -97,11 +98,7 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
 
         // 지자체 코드 없으면 새로 생성
         if (Objects.isNull(localGovernment)) {
-
-            localGovernment = LocalGovernment.builder()
-                    .localGovernmentName(localGovernmentSupportRequest.getRegion())
-                    .build();
-            localGovernmentRepository.save(localGovernment);
+            localGovernment = createLocalGovernment(localGovernmentSupportRequest);
         }
         LocalGovernmentSupport localGovernmentSupport = localGovernmentSupportRepository.findByLocalGovernment(localGovernment);
         // 지자체 지원정보 중복 체크
@@ -129,7 +126,7 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
         String rate = StringUtil.convertRateToString(localGovernmentSupport.getRateMin(), localGovernmentSupport.getRateMax());
         String limit = MoneyType.findMoneyStringType(localGovernmentSupport.getSupportLimit());
 
-        LocalGovernmentSupportResponse localGovernmentSupportResponse = LocalGovernmentSupportResponse.builder()
+        return LocalGovernmentSupportResponse.builder()
                 .id(localGovernmentSupport.getId())
                 .region(localGovernmentSupport.getLocalGovernment().getLocalGovernmentName())
                 .target(localGovernmentSupport.getTarget())
@@ -140,8 +137,6 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
                 .mgmt(localGovernmentSupport.getMgmt())
                 .reception(localGovernmentSupport.getReception())
                 .build();
-
-        return localGovernmentSupportResponse;
     }
 
     @Override
@@ -158,11 +153,7 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
 
         // 지자체 코드 없으면 새로 생성
         if (Objects.isNull(localGovernment)) {
-
-            localGovernment = LocalGovernment.builder()
-                    .localGovernmentName(localGovernmentSupportRequest.getRegion())
-                    .build();
-            localGovernmentRepository.save(localGovernment);
+            localGovernment = createLocalGovernment(localGovernmentSupportRequest);
         }
         // 이차보전 min, max 분리
         Map<String, BigDecimal> rateMap = StringUtil.convertStringRateToBigDecimal(localGovernmentSupportRequest.getRate());
@@ -203,12 +194,10 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
 
         List<LocalGovernmentSupport> localGovernmentSupportList = localGovernmentSupportRepository.findByOrderBySupportLimitAndAverageRate(count);
 
-        String regions = localGovernmentSupportList.stream()
+        return localGovernmentSupportList.stream()
                 .map(LocalGovernmentSupport::getLocalGovernment)
                 .map(LocalGovernment::getLocalGovernmentName)
                 .collect(Collectors.joining(","));
-
-        return regions;
     }
 
     @Override
@@ -220,11 +209,11 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
     }
 
     @Override
-    public List<LocalGovernmentSupportRequest> uploadLocalGovernmentSupportFile(MultipartFile multipartFile) throws IOException, InvalidFormatException {
+    public List<LocalGovernmentSupportRequest> uploadLocalGovernmentSupportFile(MultipartFile multipartFile) {
 
         try {
             List<LocalGovernmentSupportRequest> localGovernmentSupportRequestList =
-                    ExcelUtil.readFileToList(multipartFile, LocalGovernmentSupportRequest::from);
+                    ExcelUtil.readFileToList(multipartFile, LocalGovernmentSupportRequest::getLocalGovernmentSupportRequestByRow);
 
             List<LocalGovernmentSupport> localGovernmentSupportList = new ArrayList<>();
 
@@ -234,11 +223,7 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
 
                 // 지자체 코드 없으면 새로 생성
                 if (Objects.isNull(localGovernment) && Objects.nonNull(localGovernmentSupportItem.getRegion())) {
-
-                    localGovernment = LocalGovernment.builder()
-                            .localGovernmentName(localGovernmentSupportItem.getRegion())
-                            .build();
-                    localGovernmentRepository.save(localGovernment);
+                    createLocalGovernment(localGovernmentSupportItem);
                 }
                 LocalGovernmentSupport localGovernmentSupport = localGovernmentSupportRepository.findByLocalGovernment(localGovernment);
                 // 지자체 지원정보 중복 체크
@@ -268,7 +253,7 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
             return localGovernmentSupportRequestList;
 
         } catch (Exception e) {
-            throw e;
+            throw new FileUploadException();
         }
     }
 
@@ -285,7 +270,17 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
         return localGovernmentRepository.findByLocalGovernmentName(localGovernmentName);
     }
 
+    /**
+     * 지자체(기관) 등록
+     *
+     * @param localGovernmentSupportRequest
+     */
+    private LocalGovernment createLocalGovernment(LocalGovernmentSupportRequest localGovernmentSupportRequest) {
+        LocalGovernmentRequest localGovernmentRequest = LocalGovernmentRequest.builder()
+                .localGovernmentName(localGovernmentSupportRequest.getRegion())
+                .build();
+        LocalGovernmentResponse localGovernmentResponse = localGovernmentService.createLocalGovernment(localGovernmentRequest);
 
-
-
+        return localGovernmentRepository.findByLocalGovernmentName(localGovernmentResponse.getLocalGovernmentName());
+    }
 }

@@ -109,6 +109,25 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * file upload 오류
+     *
+     * @param request
+     * @param e
+     * @return
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(value = FileUploadException.class)
+    public ResponseEntity<ResponseObject> handleFileUploadException(HttpServletRequest request, FileUploadException e) {
+        log.info(String.valueOf(request.getRequestURL()));
+
+        code = ResponseCode.ERROR_FILE_UPLOAD_PROCESS.getCode();
+        title = ResponseCode.ERROR_FILE_UPLOAD_PROCESS.getTitle();
+        message = ResponseCode.ERROR_FILE_UPLOAD_PROCESS.getMessage();
+
+        return ResponseUtil.responseEntityAddOk(code, title, message);
+    }
+
+    /**
      * 유저 중복 등록 오류
      *
      * @param request

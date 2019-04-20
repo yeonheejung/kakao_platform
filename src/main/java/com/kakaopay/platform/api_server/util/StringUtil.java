@@ -1,15 +1,12 @@
 package com.kakaopay.platform.api_server.util;
 
 
-import com.kakaopay.platform.api_server.model.type.MoneyType;
-import org.apache.tomcat.util.ExceptionUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -93,7 +90,7 @@ public class StringUtil {
             return "대출이자 전액";
         }
         String rate = "";
-        System.out.println(rateMin.compareTo(rateMax));
+
         if (rateMin.compareTo(rateMax) == 0) {
             rate = rateMin + "%";
             return rate;

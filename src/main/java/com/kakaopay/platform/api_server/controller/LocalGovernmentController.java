@@ -18,14 +18,13 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/")
 @Api(value = "LocalGovernmentController", description = "지원 지자체(기관) API")
 public class LocalGovernmentController {
 
     @Autowired
     LocalGovernmentService localGovernmentService;
 
-    @GetMapping(value = "local-government")
+    @GetMapping(value = "local-government/v1")
     @ApiOperation(value = "지자체 검색", notes = "지자체 목록 검색 API", response = LocalGovernmentResponse.class)
     public ResponseEntity<ResponseObject> getLocalGovernmentList() {
 
@@ -34,7 +33,7 @@ public class LocalGovernmentController {
         return ResponseUtil.responseEntityAddOkData(localGovernmentList);
     }
 
-    @PostMapping(value = "local-government")
+    @PostMapping(value = "local-government/v1")
     @ApiOperation(value = "지자체 등록", notes = "지자체 등록 API", response = LocalGovernmentSupportResponse.class)
     public ResponseEntity<ResponseObject> createLocalGovernmentSupport(@RequestBody LocalGovernmentRequest localGovernmentRequest) {
 

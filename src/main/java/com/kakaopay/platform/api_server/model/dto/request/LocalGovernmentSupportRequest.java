@@ -33,7 +33,7 @@ public class LocalGovernmentSupportRequest {
     @ApiModelProperty(value = "취급점")
     private String reception;
 
-    public static LocalGovernmentSupportRequest from(Row row) {
+    public static LocalGovernmentSupportRequest getLocalGovernmentSupportRequestByRow(Row row) {
 
         if (row == null) {
             return null;

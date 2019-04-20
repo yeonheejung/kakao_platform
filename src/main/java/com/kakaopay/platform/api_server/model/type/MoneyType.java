@@ -11,16 +11,7 @@ public enum MoneyType {
     CASE_MONEY_D(value -> (value * (int) Math.pow(10, 8))),
     CASE_MONEY_E(value -> (value * (int) Math.pow(10, 9))),
     CASE_MONEY_F(value -> (value * (int) Math.pow(10, 10))),
-    CASE_MONEY_G(value -> (value * (int) Math.pow(10, 11))),
-
-    CASE_A_MONEY(value -> Long.valueOf(value + "십만원 이내")),
-    CASE_B_MONEY(value -> Long.valueOf(value + "백만원 이내")),
-    CASE_C_MONEY(value -> Long.valueOf(value + "천만원 이내")),
-    CASE_D_MONEY(value -> Long.valueOf(value + "억원 이내")),
-    CASE_E_MONEY(value -> Long.valueOf(value + "십억원 이내")),
-    CASE_F_MONEY(value -> Long.valueOf(value + "백억원 이내")),
-    CASE_G_MONEY(value -> Long.valueOf(value + "천억원 이내")),
-    CASE_H_MONEY(value -> Long.valueOf("추천금액 이내"));
+    CASE_MONEY_G(value -> (value * (int) Math.pow(10, 11)));
 
     private Function<Long, Long> expression;
 
@@ -31,12 +22,6 @@ public enum MoneyType {
     public Long convertMoneyToLong(Long value) {
 
         return expression.apply(value);
-    }
-
-    public String convertMoneyToString(Long value) {
-
-        System.out.println(expression.apply(value));
-        return String.valueOf(expression.apply(value));
     }
 
     public static Long findMoneyIntType(String money) {

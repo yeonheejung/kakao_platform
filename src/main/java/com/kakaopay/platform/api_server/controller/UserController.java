@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/user")
 @Api(value = "UserController", description = "user API")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "user/v1")
     @ApiOperation(value = "user 등록 API", notes = "user 등록하기", response = UserResponse.class)
     public UserResponse createUser(@RequestBody UserRequest userRequest) {
 

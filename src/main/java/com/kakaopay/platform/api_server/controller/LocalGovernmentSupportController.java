@@ -24,14 +24,13 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/")
 @Api(value = "LocalGovernmentSupportController", description = "지자체 지원 정보 API")
 public class LocalGovernmentSupportController {
 
     @Autowired
     LocalGovernmentSupportService localGovernmentSupportService;
 
-    @GetMapping("local-government-support")
+    @GetMapping("local-government-support/v1")
     @ApiOperation(value = "지자체 지원정보 목록 조회", notes = "지자체 지원정보 전체 목록 조회 API", response = LocalGovernmentSupportResponse.class)
     public ResponseEntity<ResponseObject> getLocalGovernmentSupportList() {
 
@@ -40,7 +39,7 @@ public class LocalGovernmentSupportController {
         return ResponseUtil.responseEntityAddOkData(localGovernmentSupportList);
     }
 
-    @GetMapping("local-government-support/search")
+    @GetMapping("local-government-support/v1/search")
     @ApiOperation(value = "지자체명으로 검색", notes = "지자체명으로 지원하는 지자체 정보 검색 API", response = LocalGovernmentSupportResponse.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "region", value = "지자체명", required = true, paramType = "query", dataType = "String")
@@ -53,8 +52,7 @@ public class LocalGovernmentSupportController {
         return ResponseUtil.responseEntityAddOkData(localGovernmentSupport);
     }
 
-
-    @PostMapping("local-government-support")
+    @PostMapping("local-government-support/v1")
     @ApiOperation(value = "지자체 협약 지원 정보 등록", notes = "지자체 지원 정보 등록 API", response = LocalGovernmentSupportResponse.class)
     public ResponseEntity<ResponseObject> createLocalGovernmentSupport(@RequestBody LocalGovernmentSupportRequest localGovernmentSupportRequest) {
 
@@ -74,7 +72,7 @@ public class LocalGovernmentSupportController {
         return ResponseUtil.responseEntityAddOkData(localGovernmentSupport);
     }
 
-    @PutMapping(value = "local-government-support/{id}")
+    @PutMapping(value = "local-government-support/v1/{id}")
     @ApiOperation(value = "지자체 협약 지원 정보 수정", notes = "지자체 지원 정보 수정 API", response = LocalGovernmentSupportResponse.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "지자체 지원정보  id", required = true, paramType = "path", dataType = "Long")
@@ -88,7 +86,7 @@ public class LocalGovernmentSupportController {
         return ResponseUtil.responseEntityAddOkData(localGovernmentSupport);
     }
 
-    @GetMapping("local-government-support/search/region")
+    @GetMapping("local-government-support/v1/search/region")
     @ApiOperation(value = "지자체 협약 지원 정보 특정 개수 검색(지원금액 내림차순)", notes = "지자체 지원 정보 지원금액 내림차순으로 n개 검색 API")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "limit", value = "출력 개수", required = true, paramType = "query", dataType = "int")
@@ -101,7 +99,7 @@ public class LocalGovernmentSupportController {
         return ResponseUtil.responseEntityAddOkData(regions);
     }
 
-    @GetMapping("local-government-support/search/institute")
+    @GetMapping("local-government-support/v1/search/institute")
     @ApiOperation(value = "보전 비율이 가장 작은 추천 기관명 조회", notes = "보전 비율이 가장 작은 추천 기관명 조회 API")
     public ResponseEntity<ResponseObject> getInstituteOrderByRate() {
         String institute = localGovernmentSupportService.getInstituteOrderByRate();
@@ -109,7 +107,7 @@ public class LocalGovernmentSupportController {
         return ResponseUtil.responseEntityAddOkData(institute);
     }
 
-    @PostMapping("local-government-support/upload")
+    @PostMapping("local-government-support/v1/upload")
     @ApiOperation(value = "지자체 협약 지원 정보 엑셀 업로드로 등록", notes = "지자체 협약 지원 정보 엑셀 업로드 API")
     public ResponseEntity<ResponseObject> readExcel(@RequestParam("file") MultipartFile multipartFile)
             throws IOException, InvalidFormatException {
