@@ -6,26 +6,29 @@ import com.kakaopay.platform.api_server.model.dto.request.LocalGovernmentRequest
 import com.kakaopay.platform.api_server.model.dto.response.LocalGovernmentResponse;
 import com.kakaopay.platform.api_server.repository.LocalGovernmentRepository;
 import com.kakaopay.platform.api_server.service.LocalGovernmentService;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class LocalGovernmentServiceImpl implements LocalGovernmentService {
 
     private final LocalGovernmentRepository localGovernmentRepository;
-
-    @Autowired
-    public LocalGovernmentServiceImpl(LocalGovernmentRepository localGovernmentRepository) {
-        this.localGovernmentRepository = localGovernmentRepository;
-    }
 
     @Override
     public List<LocalGovernmentResponse> getLocalGovernmentList() {
@@ -33,7 +36,7 @@ public class LocalGovernmentServiceImpl implements LocalGovernmentService {
         return localGovernmentRepository.findAll().stream().map(
                 localGovernment -> new LocalGovernmentResponse(
                         makeLocalGovernmentRegion(localGovernment.getLocalGovernmentCode()),
-                        localGovernment.getLocalGovernmentName())).collect(Collectors.toList());
+                        localGovernment.getLocalGovernmentName())).collect(toList());
     }
 
     @Override
