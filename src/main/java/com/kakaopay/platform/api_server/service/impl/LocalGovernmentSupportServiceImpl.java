@@ -239,7 +239,6 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
 
                     localGovernmentSupportList.add(localGovernmentSupport);
                 }
-
             }
             localGovernmentSupportRepository.saveAll(localGovernmentSupportList);
 
@@ -273,7 +272,6 @@ public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupport
                 .localGovernmentName(localGovernmentSupportRequest.getRegion())
                 .build();
         LocalGovernmentResponse localGovernmentResponse = localGovernmentService.createLocalGovernment(localGovernmentRequest);
-
 
         return localGovernmentRepository.findByLocalGovernmentName(localGovernmentResponse.getLocalGovernmentName());
     }
