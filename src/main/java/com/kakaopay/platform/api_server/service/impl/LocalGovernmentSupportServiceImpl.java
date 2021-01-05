@@ -16,6 +16,7 @@ import com.kakaopay.platform.api_server.service.LocalGovernmentService;
 import com.kakaopay.platform.api_server.service.LocalGovernmentSupportService;
 import com.kakaopay.platform.api_server.util.ExcelUtil;
 import com.kakaopay.platform.api_server.util.StringUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +32,12 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class LocalGovernmentSupportServiceImpl implements LocalGovernmentSupportService {
 
     private final LocalGovernmentSupportRepository localGovernmentSupportRepository;
     private final LocalGovernmentRepository localGovernmentRepository;
     private final LocalGovernmentService localGovernmentService;
-
-    @Autowired
-    public LocalGovernmentSupportServiceImpl(LocalGovernmentSupportRepository localGovernmentSupportRepository,
-                                             LocalGovernmentRepository localGovernmentRepository,
-                                             LocalGovernmentService localGovernmentService) {
-        this.localGovernmentSupportRepository = localGovernmentSupportRepository;
-        this.localGovernmentRepository = localGovernmentRepository;
-        this.localGovernmentService = localGovernmentService;
-    }
 
     @Override
     public List<LocalGovernmentSupportResponse> getLocalGovernmentSupportList() {
